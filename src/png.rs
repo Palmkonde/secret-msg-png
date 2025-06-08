@@ -1,6 +1,7 @@
-use std::collections::btree_map;
 use std::convert::TryFrom;
 use std::fmt;
+use std::path::Path;
+use std::fs;
 
 use crate::chunk::{self, Chunk};
 use crate::Result;
@@ -103,6 +104,12 @@ impl Png {
         );
         
         bytes
+    }
+    
+    pub fn from_file<P: AsRef<Path>>(path: P) -> Result<Self> {
+        let bytes = fs::read(path)?;
+        let png = Self::try_from(bytes.as_ref())?;
+        Ok(png)
     }
 }
 
