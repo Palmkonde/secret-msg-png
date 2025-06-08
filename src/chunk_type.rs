@@ -3,7 +3,7 @@ use std::str::FromStr;
 use std::fmt;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-struct ChunkType {
+pub struct ChunkType {
     bytes: [u8; 4]
 }
 
@@ -43,12 +43,12 @@ impl fmt::Display for ChunkType {
 }
 
 impl ChunkType {
-    fn bytes(&self) -> [u8; 4] { self.bytes }
-    fn is_critical(&self) -> bool { self.bytes[0].is_ascii_uppercase()}
-    fn is_public(&self) -> bool { self.bytes[1].is_ascii_uppercase()}
-    fn is_reserved_bit_valid(&self) -> bool { self.bytes[2].is_ascii_uppercase() }
-    fn is_safe_to_copy(&self) -> bool { self.bytes[3].is_ascii_lowercase() }
-    fn is_valid(&self) -> bool {
+    pub fn bytes(&self) -> [u8; 4] { self.bytes }
+    pub fn is_critical(&self) -> bool { self.bytes[0].is_ascii_uppercase()}
+    pub fn is_public(&self) -> bool { self.bytes[1].is_ascii_uppercase()}
+    pub fn is_reserved_bit_valid(&self) -> bool { self.bytes[2].is_ascii_uppercase() }
+    pub fn is_safe_to_copy(&self) -> bool { self.bytes[3].is_ascii_lowercase() }
+    pub fn is_valid(&self) -> bool {
         self.bytes.len() == 4 && 
         self.is_reserved_bit_valid() &&
         self.bytes.iter().all(|&byte| byte.is_ascii_alphabetic())
