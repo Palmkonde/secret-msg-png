@@ -2,7 +2,7 @@ use std::convert::TryFrom;
 use std::str::FromStr;
 use std::fmt;
 
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 struct ChunkType {
     bytes: [u8; 4]
 }
@@ -40,12 +40,6 @@ impl fmt::Display for ChunkType {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", String::from_utf8_lossy(&self.bytes))
     } 
-}
-
-impl PartialEq for ChunkType {
-    fn eq(&self, other: &Self) -> bool {
-        self.bytes == other.bytes
-    }
 }
 
 impl ChunkType {
