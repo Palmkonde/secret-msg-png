@@ -3,11 +3,11 @@ use std::fmt;
 use std::path::Path;
 use std::fs;
 
-use crate::chunk::{self, Chunk};
+use crate::chunk::Chunk;
 use crate::Result;
 
 
-struct Png {
+pub struct Png {
     chunks: Vec<Chunk>
 }
 
@@ -111,6 +111,12 @@ impl Png {
         let png = Self::try_from(bytes.as_ref())?;
         Ok(png)
     }
+    
+    pub fn save<P: AsRef<Path>>(&self, path: P) -> Result<()> {
+        let bytes = self.as_bytes();
+        fs::write(path, contents)?;
+        
+        Ok(())
 }
 
 
