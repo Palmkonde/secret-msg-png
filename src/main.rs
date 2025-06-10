@@ -1,4 +1,5 @@
 use std::str::FromStr;
+use structopt::StructOpt;
 
 use crate::commands::Cli;
 use crate::chunk::Chunk;
@@ -29,11 +30,13 @@ fn main() -> Result<()> {
             
             let output_path = match args.output {
                 Some(path) => path,
-                None => input.with_extension("pngme")
+                None => input.with_extension("png")
             };
             
             png.save(&output_path)
                 .map_err(|e| format!("Failed to save PNG file: {}", e))?;
+            
+            println!("Successfully encoded message into PNG file: {}", output_path.display());
         }
         
         args::PngMeArgs::Decode(args) => {
@@ -58,7 +61,9 @@ fn main() -> Result<()> {
             let png = Png::from_file(&input).unwrap();
             
             for chunk in png.chunks() {
-                println!("{}", chunk);
+                println!("This is all chunks and their types:");
+                println!("Chunk Type: {}, Length: {}", chunk.chunk_type(), chunk.data().len());
+
             }
         }
         
@@ -71,6 +76,8 @@ fn main() -> Result<()> {
             png.remove_first_chunk(&chunk_type)
                 .map_err(|e| format!("Failed to remove chunk: {}", e))?;            
             
+            png.save(&input)
+                .map_err(|e| format!("Failed to save PNG file: {}", e))?;
             println!("Removed first chunk of type '{}'", chunk_type);
         }
     }

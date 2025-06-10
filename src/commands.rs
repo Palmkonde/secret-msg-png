@@ -9,9 +9,3 @@ pub struct Cli {
     #[structopt(subcommand)]
     pub command: PngMeArgs,
 }
-
-impl Cli {
-    pub fn from_args() -> Self {
-        Cli::from_args()
-    }
-}

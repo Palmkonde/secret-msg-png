@@ -1,3 +1,4 @@
+#![allow(unused_imports, dead_code)]
 use std::convert::TryFrom;
 use std::fmt;
 use crc::{Crc, CRC_32_ISO_HDLC};

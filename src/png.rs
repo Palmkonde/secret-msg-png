@@ -1,3 +1,4 @@
+#![allow(unused_imports, dead_code)]
 use std::convert::TryFrom;
 use std::fmt;
 use std::path::Path;
@@ -114,9 +115,9 @@ impl Png {
     
     pub fn save<P: AsRef<Path>>(&self, path: P) -> Result<()> {
         let bytes = self.as_bytes();
-        fs::write(path, contents)?;
-        
+        fs::write(path, bytes)?;
         Ok(())
+    }
 }
 
 
