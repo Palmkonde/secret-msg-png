@@ -17,7 +17,7 @@ pub struct EncodeArgs {
     pub input: PathBuf,
     
     /// Chunk type to encode
-    #[structopt(short = "ch", long = "chunk-type")]
+    #[structopt(short = "c", long = "chunk-type")]
     pub chunk_type: String,
     
     /// Secret message to encode
@@ -26,7 +26,11 @@ pub struct EncodeArgs {
     
     /// Output file path
     #[structopt(short, long)]
-    pub output: Option<PathBuf>
+    pub output: Option<PathBuf>,
+        
+    /// index of the chunk to insert the secret message
+    #[structopt(long = "index")]
+    pub index: Option<usize>
 }
 
 #[derive(Debug, StructOpt)]
@@ -36,7 +40,7 @@ pub struct  DecodeArgs {
     pub input: PathBuf,
     
     /// Chunk type to encode
-    #[structopt(short = "ch", long = "chunk-type")]
+    #[structopt(short = "c", long = "chunk-type")]
     pub chunk_type: String,
 }
 
@@ -54,6 +58,6 @@ pub struct RemoveArgs {
     pub input: PathBuf,
     
     /// Chunk type to remove
-    #[structopt(short = "ch", long = "chunk-type")]
+    #[structopt(short = "c", long = "chunk-type")]
     pub chunk_type: String,
 }

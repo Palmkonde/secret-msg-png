@@ -23,10 +23,12 @@ fn main() -> Result<()> {
             let input = args.input;
             let chunk_type = ChunkType::from_str(&args.chunk_type).unwrap(); 
             let secret_message = args.secret.into_bytes();
-
             let mut png = Png::from_file(&input).unwrap();
 
-            png.append_chunk(Chunk::new(chunk_type, secret_message));           
+            match args.index {
+                Some(idx) => png.insert_chunk(idx, Chunk::new(chunk_type, secret_message.clone())),
+                None => png.append_chunk(Chunk::new(chunk_type, secret_message.clone()))           
+            };
             
             let output_path = match args.output {
                 Some(path) => path,
@@ -60,9 +62,9 @@ fn main() -> Result<()> {
             let input = args.input;
             let png = Png::from_file(&input).unwrap();
             
-            for chunk in png.chunks() {
-                println!("This is all chunks and their types:");
-                println!("Chunk Type: {}, Length: {}", chunk.chunk_type(), chunk.data().len());
+            println!("This is all chunks and their types:");
+            for (i, chunk) in png.chunks().iter().enumerate() {
+                println!("{}. Chunk Type: {}, Length: {}", i, chunk.chunk_type(), chunk.data().len());
 
             }
         }

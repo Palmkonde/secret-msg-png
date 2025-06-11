@@ -71,6 +71,14 @@ impl Png {
         self.chunks.push(chunk);
     }
     
+    pub fn insert_chunk(&mut self, index: usize, chunk: Chunk) {
+        if index <= self.chunks.len() {
+            self.chunks.insert(index, chunk);
+        } else {
+            self.chunks.push(chunk);
+        } 
+    }
+    
     pub fn remove_first_chunk(&mut self, chunk_type: &str) -> Result<Chunk> {
         let index = self.chunks.iter()
             .position(|c| c.chunk_type().to_string() == chunk_type);
